@@ -1405,7 +1405,7 @@ textarea.form-control, textarea.form-control:focus {
   list-style: none;
 }
 
-.knowledges li {;
+.knowledges li {
   display: inline-block;
   background-color: #0ba376;
   border-radius: 3px;
@@ -2949,4 +2949,20 @@ blockquote {
 
 }
 
+
+.hover-style-link { 
+  color: #FFF;
+  position: relative;
+}
+
+.hover-style-link:after {
+  background-color: #FFF;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  position: absolute;
+  right: 0;
+  transition: all .3s cubic-bezier(.645,.045,.355,1);
+  width: 0
+}
 

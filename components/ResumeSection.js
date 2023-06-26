@@ -85,7 +85,7 @@ export default function ResumeSection({ isActive }) {
                 <div className="right-part">
                   <h4 className="item-title">Team Leader</h4>
                   <p>
-                    Lead Dev sur le projet de refonte du site grand public
+                    Team Lead sur le projet de refonte du site grand public
                     Crédit Agricole
                   </p>
                 </div>
@@ -343,19 +343,25 @@ export default function ResumeSection({ isActive }) {
               <li>Spring Boot</li>
               <li>Angular</li>
               <li>Vuejs</li>
+              <li>Nuxt</li>
               <li>React</li>
+              <li>Next</li>
               <li>Flutter</li>
               <li>Git</li>
               <li>SVN</li>
-              <br />
+              <li>SQL</li>
               <li>Hibernate</li>
               <li>Liquibase</li>
+              <li>NoSQL</li>
               <li>Maven</li>
               <li>Gradle</li>
               <li>Groovy</li>
               <li>Jenkins</li>
               <li>Docker</li>
               <li>Kubernetes</li>
+              <li>Helm</li>
+              <li>Fluxcd</li>
+              <li>Artifactory</li>
               <li>Ansible</li>
               <li>Terraform</li>
               <li>Firebase</li>

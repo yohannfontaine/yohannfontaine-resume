@@ -1,4 +1,7 @@
 import { motion } from "framer-motion";
+import Isotope from "isotope-layout";
+
+import React from "react";
 
 export default function PortfolioSection({ isActive }) {
   const animations = {
@@ -9,9 +12,32 @@ export default function PortfolioSection({ isActive }) {
   const start = isActive ? animations.startShow : animations.finishShow;
   const finish = isActive ? animations.finishShow : animations.startShow;
 
-  console.log("isActive", isActive);
-  console.log("start", start);
-  console.log("finish", finish);
+  // state for storing the isotope object, with an initial value of null
+  const [isotope, setIsotope] = React.useState(null);
+  // state for storing the filter keyword, with an initial value of *, which matches everything
+  const [filterKey, setFilterKey] = React.useState("*");
+
+  React.useEffect(() => {
+    setIsotope(
+      new Isotope(".portfolio-grid", {
+        // filter-container: className of the parent of the isotope elements
+        itemSelector: ".item", // filter-item: className of the isotope elements
+        layoutMode: "fitRows", // for horizontal isotope
+      })
+    );
+  }, []);
+
+  React.useEffect(() => {
+    if (isotope) {
+      // sanity check
+      filterKey === "*"
+        ? isotope.arrange({ filter: `*` })
+        : isotope.arrange({ filter: `.${filterKey}` });
+    }
+  }, [isotope, filterKey]);
+
+  const handleFilterKeyChange = (key) => () => setFilterKey(key);
+
   return (
     <motion.section
       initial={start}
@@ -32,6 +58,7 @@ export default function PortfolioSection({ isActive }) {
                   <a
                     className="filter btn btn-sm btn-link"
                     data-group="category_all"
+                    onClick={handleFilterKeyChange("*")}
                   >
                     All
                   </a>
@@ -40,8 +67,9 @@ export default function PortfolioSection({ isActive }) {
                   <a
                     className="filter btn btn-sm btn-link"
                     data-group="category_detailed"
+                    onClick={handleFilterKeyChange("standard")}
                   >
-                    Detailed
+                    Perso
                   </a>
                 </li>
                 <li>
@@ -56,6 +84,7 @@ export default function PortfolioSection({ isActive }) {
                   <a
                     className="filter btn btn-sm btn-link"
                     data-group="category_soundcloud"
+                    onClick={handleFilterKeyChange("lbaudio")}
                   >
                     SoundCloud
                   </a>
@@ -79,20 +108,17 @@ export default function PortfolioSection({ isActive }) {
               </ul>
 
               <div className="portfolio-grid three-columns">
-                <figure
-                  className="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
-                >
+                <figure className="item perso">
                   <div className="portfolio-item-img">
                     <img
                       src="img/portfolio/1.jpg"
-                      alt="SoundCloud Audio"
+                      alt="ygamaa website"
                       title=""
                     />
                     <a
-                      href="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/221650664&#038;color=%23ff5500&#038;auto_play=false&#038;hide_related=false&#038;show_comments=true&#038;show_user=true&#038;show_reposts=false&#038;show_teaser=true&#038;visual=true"
+                      href="https://ygamaa-consulting.web.app/"
                       className="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
+                      title="ygamaa website"
                     ></a>
                   </div>
 

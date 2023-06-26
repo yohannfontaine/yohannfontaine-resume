@@ -108,7 +108,7 @@ export default function AboutSection({ isActive }) {
               <div className="info-list-w-icon">
                 <div className="info-block-w-icon">
                   <div className="ci-icon">
-                    <i className="lnr lnr-store"></i>
+                    <i className="lnr lnr-chart-bars"></i>
                   </div>
                   <div className="ci-text">
                     <h4>Audit & Optimisation</h4>
@@ -149,7 +149,7 @@ export default function AboutSection({ isActive }) {
               <div className="info-list-w-icon">
                 <div className="info-block-w-icon">
                   <div className="ci-icon">
-                    <i className="lnr lnr-flag"></i>
+                    <i className="lnr lnr-magic-wand"></i>
                   </div>
                   <div className="ci-text">
                     <h4>Coaching Tech et/ou Lean & Agile</h4>

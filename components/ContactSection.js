@@ -26,24 +26,44 @@ export default function ContactSection({ isActive }) {
         </div>
 
         <div className="row">
-          <div className="col-xs-12 col-sm-4">
+          <div className="col-xs-12 col-sm-6">
             <div className="lm-info-block gray-default">
               <i className="lnr lnr-map-marker"></i>
-              <h4>Saint-Tricat (Calaisfornia)</h4>
+              <h4>
+                <a
+                  href="https://goo.gl/maps/5pr97xmwPkMFZG5PA"
+                  className="hover-style-link"
+                >
+                  Saint-Tricat (Calaisfornia)
+                </a>
+              </h4>
               <span className="lm-info-block-value"></span>
               <span className="lm-info-block-text"></span>
             </div>
 
             <div className="lm-info-block gray-default">
               <i className="lnr lnr-phone-handset"></i>
-              <h4>+336 08 46 28 48</h4>
+              <h4>
+                <a href="tel:+336 08 46 28 48" className="hover-style-link">
+                  +336 08 46 28 48
+                </a>
+              </h4>
               <span className="lm-info-block-value"></span>
               <span className="lm-info-block-text"></span>
             </div>
+          </div>
 
+          <div className="col-xs-12 col-sm-6">
             <div className="lm-info-block gray-default">
               <i className="lnr lnr-envelope"></i>
-              <h4>yohann.fontaine@gmail.com</h4>
+              <h4>
+                <a
+                  href="mailto:yohann.fontaine@gmail.com"
+                  className="hover-style-link"
+                >
+                  yohann.fontaine@gmail.com
+                </a>
+              </h4>
               <span className="lm-info-block-value"></span>
               <span className="lm-info-block-text"></span>
             </div>
@@ -57,102 +77,6 @@ export default function ContactSection({ isActive }) {
               <span className="lm-info-block-value"></span>
               <span className="lm-info-block-text"></span>
             </div>
-          </div>
-
-          <div className="col-xs-12 col-sm-8">
-            <div id="map" className="map"></div>
-            <div className="block-title">
-              <h3>
-                How Can I <span>Help You?</span>
-              </h3>
-            </div>
-
-            <form
-              id="contact_form"
-              className="contact-form"
-              action="contact_form/contact_form.php"
-              method="post"
-            >
-              <div className="messages"></div>
-
-              <div className="controls two-columns">
-                <div className="fields clearfix">
-                  <div className="left-column">
-                    <div className="form-group form-group-with-icon">
-                      <input
-                        id="form_name"
-                        type="text"
-                        name="name"
-                        className="form-control"
-                        placeholder=""
-                        required="required"
-                        data-error="Name is required."
-                      />
-                      <label>Full Name</label>
-                      <div className="form-control-border"></div>
-                      <div className="help-block with-errors"></div>
-                    </div>
-
-                    <div className="form-group form-group-with-icon">
-                      <input
-                        id="form_email"
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        placeholder=""
-                        required="required"
-                        data-error="Valid email is required."
-                      />
-                      <label>Email Address</label>
-                      <div className="form-control-border"></div>
-                      <div className="help-block with-errors"></div>
-                    </div>
-
-                    <div className="form-group form-group-with-icon">
-                      <input
-                        id="form_subject"
-                        type="text"
-                        name="subject"
-                        className="form-control"
-                        placeholder=""
-                        required="required"
-                        data-error="Subject is required."
-                      />
-                      <label>Subject</label>
-                      <div className="form-control-border"></div>
-                      <div className="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div className="right-column">
-                    <div className="form-group form-group-with-icon">
-                      <textarea
-                        id="form_message"
-                        name="message"
-                        className="form-control"
-                        placeholder=""
-                        rows="7"
-                        required="required"
-                        data-error="Please, leave me a message."
-                      ></textarea>
-                      <label>Message</label>
-                      <div className="form-control-border"></div>
-                      <div className="help-block with-errors"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className="g-recaptcha"
-                  data-sitekey="6LdqmCAUAAAAAMMNEZvn6g4W5e0or2sZmAVpxVqI"
-                ></div>
-
-                <input
-                  type="submit"
-                  className="button btn-send"
-                  value="Send message"
-                />
-              </div>
-            </form>
           </div>
         </div>
       </div>
