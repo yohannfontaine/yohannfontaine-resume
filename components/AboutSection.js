@@ -18,10 +18,6 @@ export default function AboutSection({ isActive }) {
   const start = isActive ? animations.startShow : animations.finishShow;
   const finish = isActive ? animations.finishShow : animations.startShow;
 
-  console.log("isActive", isActive);
-  console.log("start", start);
-  console.log("finish", finish);
-
   return (
     <motion.section
       initial={start}
