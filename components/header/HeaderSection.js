@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import Menu from "@/components/header/Menu";
 import SocialLinks from "@/components/header/SocialLinks";
 
@@ -24,7 +25,7 @@ export default function HeaderSection({ activeIndex, onSelect }) {
       >
         <div className="header-content">
           <div className="header-photo">
-            <img src="img/main_photo.jpg" alt="Alex Smith" />
+            <img src="img/main_photo.jpg" alt="Yohann Fontaine" />
           </div>
           <div className="header-titles">
             <h2>Yohann Fontaine</h2>

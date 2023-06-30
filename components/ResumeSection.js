@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import Image from "next/image";
 export default function ResumeSection({ isActive }) {
   const animations = {
     startShow: { opacity: 0, scale: 0.5, visibility: "hidden" },
@@ -126,7 +126,7 @@ export default function ResumeSection({ isActive }) {
                   <h4 className="item-title">Lead Tech</h4>
                   <p>
                     Mise en place du socle technique pour un nouveau projet
-                    SNCF. Lead technique d'une équipe de 7 personnes.
+                    SNCF. Lead technique d&apos;une équipe de 7 personnes.
                   </p>
                 </div>
               </div>
@@ -143,8 +143,8 @@ export default function ResumeSection({ isActive }) {
                     Pilotage, conception et développement sur le périmètre LCT
                     (Liaison Change Trésorerie) des applications web permettant
                     à la direction financière de suivre, analyser et contrôler
-                    les positions des traders sur le forex. Mise en place d'une
-                    TMA sur le projet.
+                    les positions des traders sur le forex. Mise en place
+                    d&apos;une TMA sur le projet.
                   </p>
                 </div>
               </div>

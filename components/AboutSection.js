@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 // import Swiper core and required modules
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
 
@@ -35,21 +36,21 @@ export default function AboutSection({ isActive }) {
         <div className="row">
           <div className="col-xs-12 col-sm-7">
             <p>
-              Lead Software Engineer avec plus de 20 ans d'expérience, je suis
-              passionné et engagé pour accompagner mes clients dans leur
+              Lead Software Engineer avec plus de 20 ans d&apos;expérience, je
+              suis passionné et engagé pour accompagner mes clients dans leur
               transformation digitale et travailler avec eux pour créer des
               solutions numériques à la fois innovantes, performantes et
-              respectueuses de l'environnement. Adepte du Principe de Pareto, et
-              de l'approche "as a service", je suis convaincu que les bonnes
-              actions ciblées permettent de générer le plus de valeur métier
-              tout en optimisant le ROI.
+              respectueuses de l&apos;environnement. Adepte du Principe de
+              Pareto, et de l&apos;approche &quot;as a service&quot;, je suis
+              convaincu que les bonnes actions ciblées permettent de générer le
+              plus de valeur métier tout en optimisant le ROI.
             </p>
             <p>
-              Les valeurs principales que j'essaie de transmettre sur le terrain
-              sont :
+              Les valeurs principales que j&apos;essaie de transmettre sur le
+              terrain sont :
               <strong>
                 simplicité, agilité, innovation, amélioration continue et esprit
-                d'équipe.
+                d&apos;équipe.
               </strong>
             </p>
           </div>
@@ -109,13 +110,13 @@ export default function AboutSection({ isActive }) {
                   <div className="ci-text">
                     <h4>Audit & Optimisation</h4>
                     <p>
-                      Audit de votre architecture, préconisations d'optimisation
-                      selon votre contexte et implémentation d'architectures SI
-                      modernes et Cloud native. Patterns d'architecture :
-                      Architecture évènementielle (EDA), Architecture
-                      microservices, APIsation, Serverless, DataMesh ...), AI,
-                      Low/No Code. Conseil en GreenIT, Ecoconception, Numérique
-                      responsable
+                      Audit de votre architecture, préconisations
+                      d&apos;optimisation selon votre contexte et implémentation
+                      d&apos;architectures SI modernes et Cloud native. Patterns
+                      d&apos;architecture : Architecture évènementielle (EDA),
+                      Architecture microservices, APIsation, Serverless,
+                      DataMesh ...), AI, Low/No Code. Conseil en GreenIT,
+                      Ecoconception, Numérique responsable
                     </p>
                   </div>
                 </div>
@@ -129,8 +130,8 @@ export default function AboutSection({ isActive }) {
                       Développement à la carte de votre site web, application
                       mobile, API, etc. Développement frontend et/ou backend,
                       préconisation et mise en place de votre pipeline
-                      d'intégration et déploiement continu (CI/CD) ou Infra as
-                      Code (IaC) selon les best practices GitOps et approche
+                      d&apos;intégration et déploiement continu (CI/CD) ou Infra
+                      as Code (IaC) selon les best practices GitOps et approche
                       Accelerate. Mise en place de contrôle de qualité et bonnes
                       pratiques de sécurité.
                     </p>
@@ -150,11 +151,11 @@ export default function AboutSection({ isActive }) {
                   <div className="ci-text">
                     <h4>Coaching Tech et/ou Lean & Agile</h4>
                     <p>
-                      Audit de l'organisation de vos équipes, mise en place
+                      Audit de l&apos;organisation de vos équipes, mise en place
                       méthodologie agile scrum/kanban en fonction du contexte,
-                      agilité à l'échelle SAFe. Accompagnement de startup dans
-                      le recrutement et démarrage de leur équipe tech, CTO as a
-                      service
+                      agilité à l&apos;échelle SAFe. Accompagnement de startup
+                      dans le recrutement et démarrage de leur équipe tech, CTO
+                      as a service
                     </p>
                   </div>
                 </div>
@@ -192,11 +193,11 @@ export default function AboutSection({ isActive }) {
                 </div>
                 <div className="text">
                   <p>
-                    Yohann à la tête d'un projet sensible et essentiel pour
-                    l'activité du groupe de projets a su faire apprécier, au
-                    cours de sa mission chez Coface, ses qualités de manager de
-                    projet tout en conservant ses compétences techniques dans le
-                    monde Java / J2EE.
+                    Yohann à la tête d&apos;un projet sensible et essentiel pour
+                    l&apos;activité du groupe de projets a su faire apprécier,
+                    au cours de sa mission chez Coface, ses qualités de manager
+                    de projet tout en conservant ses compétences techniques dans
+                    le monde Java / J2EE.
                   </p>
                 </div>
 
@@ -222,8 +223,9 @@ export default function AboutSection({ isActive }) {
                 </div>
                 <div className="text">
                   <p>
-                    Yohann est un Tech Lead talentueux et rigoureux, ainsi qu'un
-                    excellent manager avec qui il est agréable de travailler.
+                    Yohann est un Tech Lead talentueux et rigoureux, ainsi
+                    qu&apos;un excellent manager avec qui il est agréable de
+                    travailler.
                   </p>
                 </div>
 
