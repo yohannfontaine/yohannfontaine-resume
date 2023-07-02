@@ -57,7 +57,7 @@ export default function Home() {
             <div className="lmpixels-arrow-left">
               <i
                 onClick={() =>
-                  setActiveIndex(activeIndex - 1 < 1 ? 5 : activeIndex - 1)
+                  setActiveIndex(activeIndex - 1 < 0 ? 5 : activeIndex - 1)
                 }
                 className="lnr lnr-chevron-left"
               ></i>
