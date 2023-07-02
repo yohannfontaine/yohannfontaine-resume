@@ -376,7 +376,7 @@ input[type="submit"]:focus {
   border-radius: 35px;
   z-index: 98;
   list-style: none;
-  bottom: 0;
+  bottom: 15px;
   -webkit-box-shadow: 0 0 30px -5px rgba(0,0,0,.15);
   -moz-box-shadow: 0 0 30px -5px rgba(0,0,0,.15);
   box-shadow: 0 0 30px -5px rgba(0,0,0,.15);
