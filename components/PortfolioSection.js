@@ -70,7 +70,7 @@ export default function PortfolioSection({ isActive }) {
                     data-group="category_pro"
                     onClick={handleFilterKeyChange("pro")}
                   >
-                    Professionel
+                    Professionnel
                   </a>
                 </li>
                 <li>
