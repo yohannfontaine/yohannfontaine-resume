@@ -38,7 +38,11 @@ export default function HeaderSection({ activeIndex, onSelect }) {
         <SocialLinks />
 
         <div className="header-buttons">
-          <a href="#" target="_blank" className="btn btn-primary">
+          <a
+            href="cv/CV_FONTAINE_yohann_2022.pdf"
+            target="_blank"
+            className="btn btn-primary"
+          >
             Download CV
           </a>
         </div>
