@@ -383,10 +383,12 @@ export default function ResumeSection({ isActive }) {
           <div className="col-xs-12 col-sm-6">
             <div className="certificate-item clearfix">
               <div className="certi-logo">
-                <img
-                  src="img/resume/cert_mark_SA_badge_large_300px.png"
-                  alt="certification SAFe Architect"
-                />
+                <a href="https://www.youracclaim.com/badges/8939aa89-1dd0-48ca-8a3e-e23f025c3e22?source=linked_in_profile">
+                  <img
+                    src="img/resume/cert_mark_SA_badge_large_300px.png"
+                    alt="certification SAFe Architect"
+                  />
+                </a>
               </div>
 
               <div className="certi-content">
@@ -406,7 +408,12 @@ export default function ResumeSection({ isActive }) {
           <div className="col-xs-12 col-sm-6">
             <div className="certificate-item clearfix">
               <div className="certi-logo">
-                <img src="img/resume/LF_logobadge.png" alt="logo" />
+                <a href="https://www.credly.com/badges/65df6f3f-52dc-48e5-afe0-46b816aa80d9?source=linked_in_profile">
+                  <img
+                    src="img/resume/LF_logobadge.png"
+                    alt="Formation Kubernetes Admin"
+                  />
+                </a>
               </div>
 
               <div className="certi-content">
@@ -418,6 +425,31 @@ export default function ResumeSection({ isActive }) {
                 </div>
                 <div className="certi-company">
                   <span>The Linux Foundation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-xs-12 col-sm-6">
+            <div className="certificate-item clearfix">
+              <div className="certi-logo">
+                <a href="https://game.coderquest.io/badge-checker/44881fce-4f71-42f4-aa01-10ce408b01f3">
+                  <img
+                    src="img/resume/badge_s0_yohannfontaine_1699538249492.png"
+                    alt="Certification Coderquest"
+                  />
+                </a>
+              </div>
+
+              <div className="certi-content">
+                <div className="certi-title">
+                  <h4>CoderQuest Season 0: Welcome to Liskov</h4>
+                </div>
+                <div className="certi-date">
+                  <span>Nov. 2023</span>
+                </div>
+                <div className="certi-company">
+                  <span>CoderQuest</span>
                 </div>
               </div>
             </div>

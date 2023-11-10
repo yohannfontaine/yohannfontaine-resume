@@ -136,7 +136,7 @@ export default function PortfolioSection({ isActive }) {
                       title=""
                     />
                     <a
-                      href="https://ca-paris.com/particuliers/"
+                      href="https://www.credit-agricole.fr/ca-paris/particulier.html"
                       className="lightbox mfp-iframe"
                       title="Credit Agricole Website"
                     ></a>
