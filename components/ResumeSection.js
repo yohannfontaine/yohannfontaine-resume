@@ -240,31 +240,31 @@ export default function ResumeSection({ isActive }) {
             <div className="skills-info skills-second-style">
               <div className="skill clearfix">
                 <h4>Architecture</h4>
-                <div className="skill-value">95%</div>
+                <div className="skill-value">90%</div>
               </div>
               <div className="skill-container skill-1">
                 <div className="skill-percentage"></div>
               </div>
 
               <div className="skill clearfix">
-                <h4>Sécurité</h4>
-                <div className="skill-value">65%</div>
+                <h4>Conception</h4>
+                <div className="skill-value">95%</div>
               </div>
               <div className="skill-container skill-2">
                 <div className="skill-percentage"></div>
               </div>
 
               <div className="skill clearfix">
-                <h4>Conception technique</h4>
-                <div className="skill-value">80%</div>
+                <h4>Sécurité</h4>
+                <div className="skill-value">75%</div>
               </div>
               <div className="skill-container skill-3">
                 <div className="skill-percentage"></div>
               </div>
 
               <div className="skill clearfix">
-                <h4>Graphic Design</h4>
-                <div className="skill-value">90%</div>
+                <h4>Agilité</h4>
+                <div className="skill-value">85%</div>
               </div>
               <div className="skill-container skill-4">
                 <div className="skill-percentage"></div>
@@ -282,7 +282,7 @@ export default function ResumeSection({ isActive }) {
             <div className="skills-info skills-second-style">
               <div className="skill clearfix">
                 <h4>Java</h4>
-                <div className="skill-value">90%</div>
+                <div className="skill-value">85%</div>
               </div>
               <div className="skill-container skill-5">
                 <div className="skill-percentage"></div>
@@ -314,7 +314,7 @@ export default function ResumeSection({ isActive }) {
                 <h4>Python</h4>
                 <div className="skill-value">50%</div>
               </div>
-              <div className="skill-container skill-8">
+              <div className="skill-container skill-9">
                 <div className="skill-percentage"></div>
               </div>
 
@@ -322,7 +322,7 @@ export default function ResumeSection({ isActive }) {
                 <h4>Dart</h4>
                 <div className="skill-value">40%</div>
               </div>
-              <div className="skill-container skill-8">
+              <div className="skill-container skill-10">
                 <div className="skill-percentage"></div>
               </div>
             </div>
