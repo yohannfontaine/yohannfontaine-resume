@@ -60,7 +60,7 @@ export default function AboutSection({ isActive }) {
               <ul>
                 <li>
                   <span className="title">Age</span>
-                  <span className="value">42</span>
+                  <span className="value">43</span>
                 </li>
 
                 <li>
