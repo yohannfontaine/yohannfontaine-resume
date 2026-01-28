@@ -60,7 +60,7 @@ export default function AboutSection({ isActive }) {
               <ul>
                 <li>
                   <span className="title">Age</span>
-                  <span className="value">43</span>
+                  <span className="value">45</span>
                 </li>
 
                 <li>
@@ -70,17 +70,7 @@ export default function AboutSection({ isActive }) {
 
                 <li>
                   <span className="title">Addresse</span>
-                  <span className="value">62185 Saint-Tricat</span>
-                </li>
-
-                <li>
-                  <span className="title">e-mail</span>
-                  <span className="value">yohann.fontaine@gmail.com</span>
-                </li>
-
-                <li>
-                  <span className="title">Phone</span>
-                  <span className="value">06 08 46 28 48</span>
+                  <span className="value">Calaisfornia</span>
                 </li>
               </ul>
             </div>

@@ -27,21 +27,10 @@ export default function ContactSection({ isActive }) {
               <i className="lnr lnr-map-marker"></i>
               <h4>
                 <a
-                  href="https://goo.gl/maps/5pr97xmwPkMFZG5PA"
+                  href="https://maps.app.goo.gl/vWwxb9dVwEP43UENA"
                   className="hover-style-link"
                 >
-                  Saint-Tricat (Calaisfornia)
-                </a>
-              </h4>
-              <span className="lm-info-block-value"></span>
-              <span className="lm-info-block-text"></span>
-            </div>
-
-            <div className="lm-info-block gray-default">
-              <i className="lnr lnr-phone-handset"></i>
-              <h4>
-                <a href="tel:+336 08 46 28 48" className="hover-style-link">
-                  +336 08 46 28 48
+                  Calaisfornia (France)
                 </a>
               </h4>
               <span className="lm-info-block-value"></span>
@@ -51,24 +40,14 @@ export default function ContactSection({ isActive }) {
 
           <div className="col-xs-12 col-sm-6">
             <div className="lm-info-block gray-default">
-              <i className="lnr lnr-envelope"></i>
+              <i className="fab fa-linkedin-in"></i>
               <h4>
                 <a
-                  href="mailto:yohann.fontaine@gmail.com"
+                  href="https://www.linkedin.com/in/yohann-fontaine-a680331b"
                   className="hover-style-link"
                 >
-                  yohann.fontaine@gmail.com
+                  linkedin
                 </a>
-              </h4>
-              <span className="lm-info-block-value"></span>
-              <span className="lm-info-block-text"></span>
-            </div>
-
-            <div className="lm-info-block gray-default">
-              <i className="lnr lnr-checkmark-circle"></i>
-              <h4>
-                Freelance Available
-                <br /> (only part time and full remote)
               </h4>
               <span className="lm-info-block-value"></span>
               <span className="lm-info-block-text"></span>

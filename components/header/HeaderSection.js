@@ -25,7 +25,12 @@ export default function HeaderSection({ activeIndex, onSelect }) {
       >
         <div className="header-content">
           <div className="header-photo">
-            <img src="img/main_photo.jpg" alt="Yohann Fontaine" />
+            <img
+              src="img/main_photo.png"
+              height="180"
+              width="180"
+              alt="Yohann Fontaine"
+            />
           </div>
           <div className="header-titles">
             <h2>Yohann Fontaine</h2>
@@ -36,16 +41,6 @@ export default function HeaderSection({ activeIndex, onSelect }) {
         <Menu activeIndex={activeIndex} onSelect={onSelectMenu} />
 
         <SocialLinks />
-
-        <div className="header-buttons">
-          <a
-            href="cv/CV_FONTAINE_yohann_2022.pdf"
-            target="_blank"
-            className="btn btn-primary"
-          >
-            Download CV
-          </a>
-        </div>
 
         <div className="copyrights">© {currentYear} All rights reserved.</div>
       </header>

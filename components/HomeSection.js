@@ -43,23 +43,10 @@ export default function HomeSection({ isActive }) {
                 autoplay={{ delay: 2000 }}
               >
                 <SwiperSlide className="swiper-slide item">
-                  <div className="sp-subtitle">
-                    Lead Software Engineer as a Service
-                  </div>
+                  <div className="sp-subtitle">Lead Software Engineer</div>
                 </SwiperSlide>
                 <SwiperSlide className="swiper-slide item">
-                  <div className="sp-subtitle">Architecte as a Service</div>
-                </SwiperSlide>
-                <SwiperSlide className="swiper-slide item">
-                  <div className="sp-subtitle">CTO as a Service</div>
-                </SwiperSlide>
-                <SwiperSlide className="swiper-slide item">
-                  <div className="sp-subtitle">
-                    Developpeur Fullstack augmenté as a Service
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide className="swiper-slide item">
-                  <div className="sp-subtitle">DevSecOps as a Service</div>
+                  <div className="sp-subtitle">Architecte</div>
                 </SwiperSlide>
               </Swiper>
             </div>
