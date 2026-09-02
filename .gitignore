@@ -32,3 +32,10 @@ yarn-error.log*
 .vercel
 
 .history
+
+
+.agents/
+.claude/
+.devcontainer/
+docs/ideas/
+skills-lock.json
