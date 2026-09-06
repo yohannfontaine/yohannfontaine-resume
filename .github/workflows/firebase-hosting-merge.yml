@@ -9,8 +9,11 @@ name: Deploy to Firebase Hosting on merge
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - run: npm install --global yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build

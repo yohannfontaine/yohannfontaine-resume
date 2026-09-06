@@ -1,0 +1,289 @@
+---
+import { Picture } from "astro:assets";
+import { about, person, type Locale } from "../../data/cv";
+import { routeById } from "../../i18n/routes";
+import { asset } from "../../lib/images";
+import { interpolate } from "../../lib/dates";
+import { hashSeed, rng, r1 } from "../../lib/seed";
+import Assistant from "../Assistant.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const lede = interpolate(about.paragraphs[0][locale]);
+
+/**
+ * Semis reproductible : le pollen est identique à chaque build, donc deux
+ * captures d'écran restent comparables et les deux langues sont identiques.
+ */
+const random = rng(hashSeed(person.name + "pollen"));
+const pollen = Array.from({ length: 22 }, () => ({
+  x: r1(random() * 100),
+  size: r1(2 + random() * 5),
+  drift: r1(-50 + random() * 100),
+  duration: r1(16 + random() * 18),
+  delay: r1(-random() * 34),
+  opacity: r1(0.2 + random() * 0.5),
+  moss: random() > 0.5,
+}));
+
+const t = {
+  eyebrow: { fr: "nature ⇄ machine", en: "nature ⇄ machine" },
+  experience: { fr: "Voir le parcours", en: "See the experience" },
+  projects: { fr: "Voir les projets", en: "See the projects" },
+} as const;
+---
+
+<section class="hero" data-hero>
+  <div class="hero__stage">
+    <Picture
+      class="hero__image"
+      src={asset("hero-symbiose.jpg")}
+      formats={["avif", "webp"]}
+      widths={[900, 1536]}
+      sizes="100vw"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+    />
+
+    {/* Ancrée sur l'étincelle entre les deux index, à 52 % / 47 % de l'image. */}
+    <div class="hero__spark" aria-hidden="true"></div>
+
+    <ul class="pollen" aria-hidden="true">
+      {
+        pollen.map((p) => (
+          <li
+            class:list={["pollen__mote", p.moss && "pollen__mote--moss"]}
+            style={`--x:${p.x}%; --s:${p.size}px; --drift:${p.drift}px; --dur:${p.duration}s; --delay:${p.delay}s; --o:${p.opacity}`}
+          />
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="wrapper">
+    {/* Panneau opaque à 72 % : mesuré contre le pire cas de l'image — un pixel
+        blanc pur. L'encre y reste à 7,05:1, le chapô à 6,06:1 et les rôles à
+        5,24:1, donc au-dessus de 4,5:1 quel que soit le cadrage. */}
+    <div class="hero__panel">
+      <p class="eyebrow">{t.eyebrow[locale]}</p>
+      <h1 class="hero__name morph">{person.name}</h1>
+      <p class="hero__roles">{person.headlines.map((h) => h[locale]).join(" · ")}</p>
+      <p class="hero__lede">{lede}</p>
+      <p class="hero__actions">
+        <a class="btn btn--vivant" href={routeById("experience").path[locale]}>
+          {t.experience[locale]}
+        </a>
+        <a class="btn" href={routeById("projects").path[locale]}>
+          {t.projects[locale]}
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="home-assistant">
+  <Assistant locale={locale} />
+</div>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    align-content: end;
+    min-block-size: min(88vh, 46rem);
+    overflow: clip;
+    isolation: isolate;
+    /* Le hero déborde du `main` en pleine largeur, sans casser la grille. */
+    margin-inline: calc(50% - 50vw);
+    margin-block-start: calc(-1 * var(--space-xl));
+  }
+
+  .hero__stage {
+    position: absolute;
+    inset: -3%;
+    z-index: -1;
+    /* Décalage écrit par le script ; sans JS il reste nul et la scène est
+       simplement immobile. */
+    translate: calc(var(--px, 0) * 14px) calc(var(--py, 0) * 10px);
+    transition: translate 600ms var(--ease-vivant);
+  }
+
+  .hero__image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 52% 46%;
+    animation: breathe 34s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    from {
+      scale: 1;
+    }
+    to {
+      scale: 1.06;
+    }
+  }
+
+  .hero__spark {
+    position: absolute;
+    inset-inline-start: 52%;
+    inset-block-start: 47%;
+    inline-size: min(30vw, 20rem);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(247, 253, 232, 0.55) 0%,
+      rgba(119, 227, 255, 0.22) 34%,
+      transparent 68%
+    );
+    mix-blend-mode: screen;
+    animation: pulse 5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+      scale: 0.9;
+    }
+    50% {
+      opacity: 1;
+      scale: 1.14;
+    }
+  }
+
+  /* -- panneau de lecture -- */
+  .hero__panel {
+    max-inline-size: 52rem;
+    margin-block: var(--space-3xl) var(--space-2xl);
+    padding: var(--space-xl);
+    border-radius: var(--radius-vivant);
+    border: 1px solid color-mix(in srgb, var(--rule-strong) 60%, transparent);
+    /* Le flou n'est qu'un bonus esthétique : le contraste est déjà tenu par
+       l'opacité seule, donc rien ne casse là où il n'est pas supporté. */
+    background: rgba(4, 16, 14, 0.72);
+    backdrop-filter: blur(14px) saturate(1.1);
+  }
+
+  .hero__name {
+    margin-block-start: var(--space-s);
+    font-size: clamp(2.75rem, 1rem + 7vw, 6.5rem);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    color: #f4fbf7;
+  }
+
+  .hero__roles {
+    margin-block-start: var(--space-m);
+    font-family: var(--font-mono);
+    font-size: var(--text-s);
+    color: var(--mousse-100);
+  }
+
+  .hero__lede {
+    margin-block-start: var(--space-l);
+    max-inline-size: 46ch;
+    font-family: var(--font-display);
+    font-size: var(--text-l);
+    line-height: 1.45;
+    color: #d3e5de;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-block-start: var(--space-xl);
+  }
+
+  /* -- pollen -- */
+  .pollen {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: clip;
+  }
+
+  .pollen__mote {
+    position: absolute;
+    inset-block-end: -6%;
+    inset-inline-start: var(--x);
+    inline-size: var(--s);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--pollen);
+    box-shadow: 0 0 9px 2px rgba(227, 210, 74, 0.5);
+    opacity: 0;
+    mix-blend-mode: screen;
+    animation: rise var(--dur) linear infinite var(--delay);
+  }
+
+  .pollen__mote--moss {
+    background: var(--mousse-100);
+    box-shadow: 0 0 9px 2px rgba(172, 226, 114, 0.45);
+  }
+
+  @keyframes rise {
+    0% {
+      translate: 0 0;
+      opacity: 0;
+    }
+    12% {
+      opacity: var(--o);
+    }
+    78% {
+      opacity: var(--o);
+    }
+    100% {
+      translate: var(--drift) -112vh;
+      opacity: 0;
+    }
+  }
+
+  .home-assistant {
+    margin-block-start: var(--space-2xl);
+  }
+</style>
+
+<script>
+  /**
+   * Parallaxe au pointeur : deux variables CSS écrites sur la section, rien de
+   * plus. Le rendu reste entièrement décrit par la feuille de style, et la
+   * scène est correcte si ce script ne s'exécute jamais.
+   *
+   * Ignoré au doigt : il n'y a pas de survol sur un écran tactile, et suivre le
+   * doigt pendant le défilement donne le mal de mer.
+   */
+  const hero = document.querySelector<HTMLElement>("[data-hero]");
+  const fine = matchMedia("(pointer: fine)").matches;
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (hero && fine && !still) {
+    let frame = 0;
+    hero.addEventListener("pointermove", (event) => {
+      // Une seule écriture par image : `pointermove` tire bien plus vite que
+      // l'écran ne rafraîchit.
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const box = hero.getBoundingClientRect();
+        hero.style.setProperty("--px", String((event.clientX - box.left) / box.width - 0.5));
+        hero.style.setProperty("--py", String((event.clientY - box.top) / box.height - 0.5));
+      });
+    });
+
+    hero.addEventListener("pointerleave", () => {
+      hero.style.setProperty("--px", "0");
+      hero.style.setProperty("--py", "0");
+    });
+  }
+</script>

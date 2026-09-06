@@ -1,0 +1,546 @@
+/**
+ * Design system « Symbiose » — proposition.
+ *
+ * Se charge après `global.css` et n'est pas dans une couche de cascade : il
+ * gagne donc sur les jetons existants sans avoir à en dupliquer la structure.
+ * Le balisage des composants ne change pas.
+ *
+ * Principe directeur : trois familles de couleur, et une seule qui a le droit
+ * d'être éclatante. Le vivant est vert, la machine est bleue, et le blanc est
+ * réservé au point où les deux se touchent. Rien d'autre n'est blanc — c'est
+ * ce qui fait que le contact se voit.
+ *
+ * Tous les rapports de contraste ci-dessous sont mesurés, pas estimés.
+ */
+
+/* --------------------------------------------------------------- polices
+ * Fraunces est une display variable dont deux axes ne servent qu'à une chose :
+ * `SOFT` arrondit les terminaisons, `WONK` bascule certaines lettres vers des
+ * formes plus manuscrites. Autrement dit, la police sait aller du dessin
+ * mécanique au dessin organique — le même trajet que les figures. Elle n'est
+ * donc pas choisie pour son allure mais pour ce qu'elle peut dire.
+ *
+ * Coût mesuré : 118 kB pour le fichier à quatre axes, contre 35,8 kB pour la
+ * même police en graisse seule. Les 82 kB d'écart achètent exactement l'effet.
+ * JetBrains Mono (39,5 kB) tient le pôle machine. Le corps de texte reste en
+ * police système : il n'a pas besoin de personnalité, et ça économise 45 kB.
+ *
+ * Les deux sont sous licence OFL, redistribuables ; les licences sont dans
+ * `public/fonts/`.
+ */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------------------------------------------------------------- jetons */
+:root {
+  color-scheme: dark;
+
+  --font-display: "Fraunces", ui-serif, Georgia, "Iowan Old Style", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* -- base : la nuit du couloir -- */
+  --nuit-900: #04100e;
+  --nuit-800: #06110f;
+  --nuit-700: #0a1a17;
+  --nuit-600: #10251f;
+  --nuit-500: #17302b;
+  --nuit-400: #2b4a43;
+  --nuit-300: #4d746a;
+
+  /* -- vivant : le bras de mousse -- */
+  --mousse-400: #3f8a2e;
+  --mousse-300: #6fbf4a;
+  --mousse-200: #8ed455;
+  --mousse-100: #ace272;
+  --mousse-050: #d6f3a0;
+
+  /* -- machine : les néons du couloir -- */
+  --cyan-500: #1f6ba8;
+  --cyan-400: #2f7fbe;
+  --cyan-300: #3c92cd;
+  --cyan-200: #57bafd;
+  --cyan-100: #77e3ff;
+  --cyan-050: #9ee9ff;
+
+  /* -- contact : l'étincelle, et rien d'autre -- */
+  --contact: #f7fde8;
+  --pollen: #e3d24a;
+
+  /* -- rôles --
+     Contrastes sur --surface : ink 17.0:1, ink-muted 7.9:1, ink-faint 4.7:1,
+     accent 9.0:1, accent-vivant 12.7:1. Les deux filets sont décoratifs sauf
+     --rule-strong, qui borde des composants interactifs : 3.7:1, au-dessus du
+     seuil de 3:1, y compris sur --surface-sunken (3.4:1). */
+  --surface: var(--nuit-800);
+  --surface-sunken: var(--nuit-700);
+  --surface-raised: var(--nuit-600);
+  --ink: #e9f4ef;
+  --ink-muted: #93aca4;
+  --ink-faint: #6b837c;
+  --rule: var(--nuit-500);
+  --rule-strong: var(--nuit-300);
+
+  --accent: var(--cyan-200);
+  --accent-vivant: var(--mousse-100);
+  --accent-machine: var(--cyan-100);
+  --accent-contact: var(--contact);
+
+  /* -- lueurs --
+     Une lueur n'est pas une ombre : elle ne descend pas, elle rayonne. */
+  --glow-vivant: 0 0 24px -4px color-mix(in srgb, var(--mousse-100) 55%, transparent);
+  --glow-machine: 0 0 24px -4px color-mix(in srgb, var(--cyan-100) 55%, transparent);
+  --glow-contact: 0 0 32px -2px color-mix(in srgb, var(--contact) 45%, transparent);
+
+  /* -- dégradés --
+     Le dégradé des deux mains. Il n'existe qu'un seul, et il se lit toujours
+     de gauche (vivant) à droite (machine). */
+  --gradient-symbiose: linear-gradient(
+    100deg,
+    var(--mousse-300) 0%,
+    var(--mousse-100) 26%,
+    var(--contact) 50%,
+    var(--cyan-100) 74%,
+    var(--cyan-300) 100%
+  );
+
+  /* -- mouvement --
+     Deux courbes, une par pôle. Le vivant démarre vite et s'installe ; la
+     machine est symétrique et sans dépassement. Le choix de la courbe dit à
+     quel monde appartient l'élément qui bouge. */
+  --ease-vivant: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-machine: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur: 300ms;
+  --dur-slow: 720ms;
+  --dur-ambient: 7.5s;
+
+  /* -- forme --
+     Le vivant est arrondi, la machine est à angle droit. Un composant choisit
+     son rayon selon ce qu'il représente, jamais par habitude. */
+  --radius-machine: 2px;
+  --radius-vivant: 14px;
+  --radius-pill: 999px;
+
+  --measure: 66ch;
+  --wrapper: 74rem;
+}
+
+/* ------------------------------------------------------------------ base */
+body {
+  /* Le hero déborde en pleine largeur via `margin-inline: calc(50% - 50vw)`.
+     `100vw` inclut la largeur de la barre de défilement : sans cette garde, la
+     page gagne quelques pixels de défilement horizontal. `clip` plutôt que
+     `hidden`, qui casserait l'en-tête collant. */
+  overflow-x: clip;
+  background:
+    radial-gradient(140% 80% at 72% -12%, #0d2b33 0%, transparent 58%),
+    radial-gradient(90% 60% at 8% 4%, #0d2417 0%, transparent 55%),
+    var(--surface);
+  background-attachment: fixed;
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--contact);
+  color: var(--nuit-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-machine);
+  outline-offset: 3px;
+}
+
+a {
+  text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  transition: text-decoration-color var(--dur) var(--ease-machine);
+}
+
+a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ------------------------------------------------------------ typographie */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-optical-sizing: auto;
+  /* Repos : lettres organiques. C'est l'état d'arrivée, pas l'état neutre. */
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+/**
+ * Le titre se forme sous les yeux : il arrive mécanique (`SOFT` 0, `WONK` 0,
+ * graisse fine) et devient organique en deux secondes et demie.
+ *
+ * `backwards` plutôt que `forwards` : l'état de repos de la règle ci-dessus est
+ * déjà l'état d'arrivée, l'animation ne fait que montrer d'où l'on vient. Une
+ * fois finie, elle rend la main — et la transition de survol reprend, ce qui
+ * serait impossible avec `forwards` qui verrouillerait la valeur.
+ */
+.morph {
+  transition: font-variation-settings var(--dur-slow) var(--ease-vivant);
+  animation: morph 2.4s var(--ease-vivant) 0.25s backwards;
+}
+
+@keyframes morph {
+  from {
+    font-variation-settings: "SOFT" 0, "WONK" 0;
+    font-weight: 300;
+  }
+}
+
+/* Au survol, le titre repart vers la machine. Le geste est réversible : c'est
+   une symbiose, pas une conquête. */
+.morph:hover {
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .morph {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Le seul endroit où le dégradé des deux mains touche du texte. Sous garde :
+   sans elle, un moteur qui connaît `-webkit-text-fill-color` mais pas le
+   découpage sur le texte rendrait le titre invisible. */
+.text-symbiose {
+  color: var(--ink);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .text-symbiose {
+    background: var(--gradient-symbiose);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent-machine);
+}
+
+/* ------------------------------------------------------------- composants */
+
+/* -- en-tête -- */
+.site-header {
+  border-block-end: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--nuit-900) 70%, transparent);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+}
+
+.nav-list a[aria-current] {
+  color: var(--ink);
+  border-block-end: 2px solid var(--accent);
+}
+
+/* -- titres de section --
+   Le filet part du vivant et se perd dans la nuit : la même lecture
+   gauche-droite que le reste du système. */
+.section__title::after {
+  block-size: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-vivant),
+    color-mix(in srgb, var(--accent-machine) 50%, transparent) 45%,
+    transparent
+  );
+}
+
+/* -- boutons --
+   Deux registres assumés : `--vivant` est plein, arrondi, chaleureux ;
+   `--machine` est un contour à angle vif. Le premier est l'action principale,
+   le second est tout le reste. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-s) var(--space-l);
+  font-size: var(--text-s);
+  text-decoration: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  transition:
+    border-color var(--dur) var(--ease-machine),
+    color var(--dur) var(--ease-machine),
+    box-shadow var(--dur) var(--ease-machine);
+}
+
+.btn:hover {
+  border-color: var(--accent-machine);
+  color: var(--accent-machine);
+  box-shadow: var(--glow-machine);
+}
+
+.btn--vivant {
+  background: var(--gradient-symbiose);
+  border-color: transparent;
+  color: var(--nuit-900);
+  font-weight: 600;
+}
+
+.btn--vivant:hover {
+  color: var(--nuit-900);
+  box-shadow: var(--glow-contact);
+}
+
+.btn--machine {
+  border-radius: var(--radius-machine);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Le bouton hérité de `global.css` suit le même registre. */
+.button {
+  border-radius: var(--radius-pill);
+  border-color: var(--rule-strong);
+  color: var(--ink);
+  transition: all var(--dur) var(--ease-machine);
+}
+
+.button:hover {
+  background: transparent;
+  border-color: var(--accent-machine);
+  color: var(--accent-machine);
+  box-shadow: var(--glow-machine);
+}
+
+/* -- cartes --
+   Le liseré supérieur est le dégradé des deux mains, révélé au survol : la
+   carte appartient au système même quand elle est au repos. */
+.card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-vivant);
+  background: linear-gradient(160deg, var(--nuit-600) 0%, var(--nuit-800) 100%);
+  padding: var(--space-l);
+  transition:
+    border-color var(--dur) var(--ease-vivant),
+    translate var(--dur) var(--ease-vivant);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 1px;
+  background: var(--gradient-symbiose);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-vivant);
+}
+
+.card:hover,
+.card:has(a:focus-visible) {
+  border-color: var(--rule-strong);
+  translate: 0 -3px;
+}
+
+.card:hover::before,
+.card:has(a:focus-visible)::before {
+  opacity: 1;
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-l);
+  font-weight: 600;
+}
+
+/* -- étiquettes -- */
+.tags li {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-machine);
+  background: var(--surface-sunken);
+  color: var(--accent-vivant);
+  transition: border-color var(--dur) var(--ease-machine);
+}
+
+.tags li:hover {
+  border-color: var(--accent-vivant);
+}
+
+/* -- compétences --
+   La valeur chiffrée passe en cyan : c'est une mesure, donc du registre
+   machine. */
+.skill {
+  border-block-end: 1px solid var(--rule);
+}
+
+.skill__value {
+  color: var(--accent-machine);
+}
+
+/* -- chiffres -- */
+.fact__value {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--accent-vivant);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .fact__value {
+    background: var(--gradient-symbiose);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* -- citations -- */
+.quote {
+  border-inline-start: 2px solid transparent;
+  border-image: var(--gradient-symbiose) 1;
+  padding-inline-start: var(--space-l);
+}
+
+/* -- chronologie -- */
+.timeline__item {
+  border-inline-start: 1px solid var(--rule);
+  position: relative;
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0.55em;
+  inset-inline-start: -4px;
+  inline-size: 7px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent-vivant);
+  box-shadow: var(--glow-vivant);
+}
+
+/* -- boîte assistant -- */
+.assistant {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-vivant);
+  background: linear-gradient(160deg, var(--nuit-600) 0%, var(--nuit-800) 100%);
+}
+
+.assistant pre {
+  background: var(--nuit-900);
+  border-color: var(--rule);
+  border-radius: var(--radius-machine);
+}
+
+/* -- pied de page -- */
+.site-footer {
+  border-block-start: 1px solid var(--rule);
+}
+
+/* -- services --
+   Le jeu d'icônes fourni ne partage pas un fond unique : certaines sont sur
+   fond clair, d'autres sur fond sombre. Le cadre uniforme limite l'écart sans
+   le supprimer — pour un usage systématique, il faudrait les régénérer sur un
+   fond unique ou en transparence. */
+.services {
+  display: grid;
+  gap: var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  list-style: none;
+  padding: 0;
+}
+
+.service h3 {
+  margin-block: var(--space-m) var(--space-xs);
+  font-size: var(--text-l);
+}
+
+.service p {
+  color: var(--ink-muted);
+  font-size: var(--text-s);
+  max-inline-size: var(--measure);
+}
+
+.service__icon {
+  display: block;
+  inline-size: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: var(--radius-vivant);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+
+.service__icon img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* -- logos clients --
+   `global.css` leur pose une pastille blanche parce que les logos sont dessinés
+   pour un fond clair. Sur fond de nuit, la pastille est trop violente : on la
+   remplace par un voile discret et on désature au repos. */
+.logos li {
+  background: color-mix(in srgb, #fff 88%, var(--nuit-900));
+  border-color: var(--rule);
+  border-radius: var(--radius-machine);
+  filter: saturate(0.85);
+  transition: filter var(--dur) var(--ease-machine);
+}
+
+.logos li:hover {
+  filter: none;
+}
+
+/* ------------------------------------------------------------- figures
+   Cadre des illustrations générées. Le fond de la figure est déjà celui du
+   site : aucun liseré ne sépare l'image de la page, elle en fait partie. */
+.figure {
+  position: relative;
+  margin: 0;
+  overflow: clip;
+}
+
+.figure svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.figure__caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--ink-faint);
+}
+
+/* Les bords de la figure se fondent dans la page plutôt que de s'y découper. */
+.figure--bleed {
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}

@@ -1,0 +1,68 @@
+---
+import { LOCALES, DEFAULT_LOCALE, type Locale } from "../data/cv";
+import { routeById } from "../i18n/routes";
+import { ui } from "../i18n/ui";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import PersonSchema from "../components/PersonSchema.astro";
+import "../styles/global.css";
+// Chargé après `global.css` et hors couche de cascade : le design system gagne
+// sur les jetons de base sans avoir à en dupliquer la structure.
+import "../styles/symbiose.css";
+
+interface Props {
+  locale: Locale;
+  routeId: string;
+  title: string;
+  description: string;
+}
+
+const { locale, routeId, title, description } = Astro.props;
+const current = routeById(routeId);
+const abs = (path: string) => new URL(path, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={abs(current.path[locale])} />
+    <meta property="og:locale" content={locale === "fr" ? "fr_FR" : "en_US"} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={abs(current.path[locale])} />
+    {
+      LOCALES.map((l) => (
+        <link rel="alternate" hreflang={l} href={abs(current.path[l])} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={abs(current.path[DEFAULT_LOCALE])}
+    />
+    <link
+      rel="alternate"
+      type="application/json"
+      href={locale === "fr" ? "/cv.json" : "/en/cv.json"}
+      title="JSON Resume"
+    />
+    <PersonSchema locale={locale} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{ui.skipToContent[locale]}</a>
+    <SiteHeader locale={locale} routeId={routeId} />
+
+    <main id="main" class="wrapper page">
+      <slot />
+    </main>
+
+    <SiteFooter locale={locale} />
+  </body>
+</html>

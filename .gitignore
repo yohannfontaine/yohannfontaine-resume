@@ -8,12 +8,13 @@
 # testing
 /coverage
 
-# next.js
-/.next/
+# astro
+.astro/
 /out/
 
 # production
 /build
+.next/
 
 # misc
 .DS_Store
@@ -39,3 +40,18 @@ yarn-error.log*
 .devcontainer/
 docs/ideas/
 skills-lock.json
+
+# Prévisualisation locale des figures générées (outil de travail)
+.preview/
+
+# Matériaux sources (hors pipeline Astro : pas globbés, donc pas livrés)
+design/
+
+# Maquettes de comparaison pour choisir une direction visuelle (noindex,
+# jamais liées depuis la nav) : locales tant que le choix n'est pas définitif.
+src/pages/proto/
+src/layouts/Proto.astro
+src/components/proto/
+src/lib/proto/
+src/assets/proto/
+src/lib/contrast.ts

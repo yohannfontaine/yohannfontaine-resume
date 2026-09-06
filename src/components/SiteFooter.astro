@@ -1,0 +1,33 @@
+---
+import { socialLinks, type Locale } from "../data/cv";
+import { ui } from "../i18n/ui";
+import { buildDate, currentYear } from "../lib/dates";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const cvPath = locale === "fr" ? "/cv.json" : "/en/cv.json";
+---
+
+<footer class="site-footer">
+  <div class="wrapper site-footer__inner">
+    <p>
+      © {currentYear} — <span class="eyebrow">{locale === "fr" ? "mis à jour le" : "updated"} {buildDate}</span>
+    </p>
+
+    <ul class="inline-list">
+      {
+        socialLinks.map((link) => (
+          <li>
+            <a href={link.url} rel="me noopener">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li><a href={cvPath}>{ui.cvJsonLabel[locale]}</a></li>
+    </ul>
+  </div>
+</footer>

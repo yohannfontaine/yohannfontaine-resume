@@ -1,0 +1,32 @@
+---
+export interface TimelineItem {
+  id: string;
+  period: string;
+  org: string;
+  role: string;
+  summary?: string | null;
+}
+
+interface Props {
+  items: TimelineItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ol class="timeline">
+  {
+    items.map((item) => (
+      <li class="timeline__item">
+        <div class="timeline__meta">
+          <p class="timeline__period">{item.period}</p>
+          <p class="timeline__org">{item.org}</p>
+        </div>
+        <div>
+          <h3 class="timeline__role">{item.role}</h3>
+          {item.summary && <p class="timeline__summary">{item.summary}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>

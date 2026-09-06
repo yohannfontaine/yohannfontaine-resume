@@ -1,0 +1,107 @@
+---
+import { Image } from "astro:assets";
+import {
+  about,
+  clients,
+  funFacts,
+  services,
+  testimonials,
+  type Locale,
+} from "../../data/cv";
+import { ui } from "../../i18n/ui";
+import { asset } from "../../lib/images";
+import { interpolate } from "../../lib/dates";
+import SectionTitle from "../SectionTitle.astro";
+import PageFigure from "../PageFigure.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+/**
+ * Une icône par service. Les trois choisies partagent un fond sombre ou neutre :
+ * le jeu fourni mélange fonds clairs et sombres, et les mélanger côte à côte se
+ * verrait immédiatement.
+ */
+const serviceIcons: Record<string, string> = {
+  audit: "icons/reseau.png",
+  dev: "icons/puce-ia.png",
+  coaching: "icons/arbre.png",
+};
+---
+
+<h1>{locale === "fr" ? "À propos" : "About"}</h1>
+
+<PageFigure id="about" />
+
+<div class="section stack prose">
+  {about.paragraphs.map((p) => <p>{interpolate(p[locale])}</p>)}
+  <ul class="tags">
+    {about.values.map((v) => <li>{v[locale]}</li>)}
+  </ul>
+</div>
+
+<section class="section">
+  <SectionTitle title={ui.whatIDo[locale]} />
+  <ul class="services">
+    {
+      services.map((service) => (
+        <li class="service">
+          <span class="service__icon">
+            <Image src={asset(serviceIcons[service.id]!)} alt="" width={112} height={112} />
+          </span>
+          <h3>{service.title[locale]}</h3>
+          <p>{service.description[locale]}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.testimonials[locale]} />
+  <div class="stack-l">
+    {
+      testimonials.map((t) => (
+        <blockquote class="quote">
+          <p>{t.quote[locale]}</p>
+          <footer>
+            <cite>{t.author}</cite> — {t.role[locale]}
+            {locale === "en" && (
+              <span class="eyebrow"> · {ui.translationNote.en}</span>
+            )}
+          </footer>
+        </blockquote>
+      ))
+    }
+  </div>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.clients[locale]} />
+  <ul class="logos">
+    {
+      clients.map((client) => (
+        <li>
+          <Image src={asset(client.logo)} alt={client.name} width={160} loading="lazy" />
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.funFacts[locale]} />
+  <ul class="facts">
+    {
+      funFacts.map((fact) => (
+        <li>
+          <p class="fact__value">{fact.value}</p>
+          <p class="fact__label">{fact.label[locale]}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
