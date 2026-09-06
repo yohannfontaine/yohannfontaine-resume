@@ -1,0 +1,30 @@
+---
+// Firebase Hosting sert ce fichier pour toute URL inconnue, sans distinction de
+// langue : la page est donc bilingue par nécessité.
+import { routeById } from "../i18n/routes";
+import { ui } from "../i18n/ui";
+import "../styles/global.css";
+
+const home = routeById("home");
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{ui.notFoundTitle.fr} — Yohann Fontaine</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <main class="wrapper page stack">
+      <h1>{ui.notFoundTitle.fr}</h1>
+      <p><a href={home.path.fr}>{ui.backHome.fr}</a></p>
+      <p lang="en">
+        <span class="eyebrow">{ui.notFoundTitle.en}</span> —
+        <a href={home.path.en}>{ui.backHome.en}</a>
+      </p>
+    </main>
+  </body>
+</html>

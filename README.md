@@ -1,38 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# yohannfontaine-resume
 
-## Getting Started
+Yohann Fontaine's résumé site — [yohannfontaine-resume.web.app](https://yohannfontaine-resume.web.app)
 
-First, run the development server:
+Bilingual (French / English) static site, built with [Astro](https://astro.build) and deployed on Firebase Hosting.
+
+## Getting started
+
+Node 18.20.8, 20.3, or 22 and above.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+yarn install
+yarn dev      # dev server
+yarn build    # astro check, then static build to out/
+yarn preview  # serve the local build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`yarn build` runs `astro check` (type checking), then the static compilation to `out/`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Where the content lives
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+All résumé content lives in **`src/data/cv.ts`**, never in markup. Experience, education, skills, certificates, projects, testimonials, and links are all typed there.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Every translatable string is a `Record<Locale, string>`: a missing translation raises a compile error. Neutral fields — dates, company names, technologies, URLs — stay outside the translation system.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Anything that ages is computed at build time: years of experience are derived from the first position, ongoing periods show "present", and `dateModified` follows the compilation date.
 
-## Learn More
+```
+src/
+  data/cv.ts         content, typed and bilingual
+  i18n/routes.ts     route map, single source for navigation,
+                     the language switcher, hreflang tags, and the sitemap
+  i18n/ui.ts         interface labels
+  lib/               computed dates, image resolution, generated figures,
+                     JSON Resume, condensed profile
+  components/        display components
+  components/pages/  page bodies, parameterised by language
+  pages/             routes and endpoints
+  pages/figures/     SVG endpoint for the generated banners
+  styles/            design tokens (global.css) and theme (symbiose.css)
+```
 
-To learn more about Next.js, take a look at the following resources:
+Each page's body is a component that takes the locale as a prop: the markup exists only once for both versions.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+French sits at the root, English under `/en/`, with translated slugs.
 
-## Deploy on Vercel
+| French       | English           |
+| ------------ | ----------------- |
+| `/`          | `/en/`            |
+| `/a-propos/` | `/en/about/`      |
+| `/parcours/` | `/en/experience/` |
+| `/projets/`  | `/en/projects/`   |
+| `/contact/`  | `/en/contact/`    |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Machine-readable resources
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Resource                    | Content                                                   |
+| --------------------------- | --------------------------------------------------------- |
+| `/cv.json` and `/en/cv.json`| Résumé in [JSON Resume](https://jsonresume.org/schema) schema |
+| `/llms.txt`                 | Index of pages and structured data                        |
+| `/sitemap.xml`               | Sitemap generated from `src/i18n/routes.ts`, with language pairing |
+
+Every page carries a `Person` JSON-LD block, reciprocal `hreflang` tags, and a canonical URL.
+
+## Deployment
+
+Firebase Hosting, via GitHub Actions. A push to `main` deploys to production; a pull request generates a preview. The build outputs to `out/`, served as-is by `firebase.json`.
+
+## Licence
+
+[MIT](LICENSE). The code is reusable; the résumé content, images, and logos are not.

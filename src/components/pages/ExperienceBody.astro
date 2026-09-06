@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+import {
+  certificates,
+  education,
+  knowledge,
+  positions,
+  skillGroups,
+  type Locale,
+} from "../../data/cv";
+import { ui } from "../../i18n/ui";
+import { asset } from "../../lib/images";
+import { formatPeriod } from "../../lib/dates";
+import SectionTitle from "../SectionTitle.astro";
+import Timeline from "../Timeline.astro";
+import PageFigure from "../PageFigure.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const jobs = positions.map((p) => ({
+  id: p.id,
+  period: formatPeriod(p, locale),
+  org: p.company,
+  role: p.title[locale],
+  summary: p.summary[locale],
+}));
+
+const studies = education.map((e) => ({
+  id: e.id,
+  period: formatPeriod(e, locale),
+  org: e.school,
+  role: e.degree[locale],
+  summary: e.detail?.[locale] ?? null,
+}));
+
+const dateFormatter = new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", {
+  year: "numeric",
+  month: "long",
+});
+---
+
+<h1>{locale === "fr" ? "Parcours" : "Experience"}</h1>
+
+<PageFigure id="experience" />
+
+<section class="section">
+  <SectionTitle title={ui.experience[locale]} />
+  <Timeline items={jobs} />
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.education[locale]} />
+  <Timeline items={studies} />
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.skills[locale]} />
+  <div class="stack-l">
+    {
+      skillGroups.map((group) => (
+        <div class="stack">
+          <h3>{group.label[locale]}</h3>
+          <dl class="skills">
+            {group.skills.map((skill) => (
+              <div class="skill">
+                <dt>{skill.name}</dt>
+                <dd class="skill__value">{skill.level} %</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.knowledge[locale]} />
+  <ul class="tags">
+    {knowledge.map((tech) => <li>{tech}</li>)}
+  </ul>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.certificates[locale]} />
+  <ul>
+    {
+      certificates.map((cert) => (
+        <li class="cert">
+          <Image src={asset(cert.image)} alt="" width={112} loading="lazy" />
+          <div>
+            <h3>
+              <a href={cert.badgeUrl} rel="noopener">
+                {cert.name}
+              </a>
+            </h3>
+            <p class="cert__meta">
+              {cert.issuer} ·{" "}
+              <time datetime={cert.date}>
+                {dateFormatter.format(new Date(`${cert.date.length === 7 ? `${cert.date}-01` : cert.date}T00:00:00Z`))}
+              </time>
+            </p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

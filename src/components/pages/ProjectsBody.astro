@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+import { projects, type Locale } from "../../data/cv";
+import { ui } from "../../i18n/ui";
+import { asset } from "../../lib/images";
+import SectionTitle from "../SectionTitle.astro";
+import PageFigure from "../PageFigure.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+/* Cinq projets et deux catégories : deux sections suffisent. L'ancien site
+   chargeait `isotope-layout` et deux effets de bord pour filtrer ces cinq
+   cartes — ici c'est de la grille CSS et zéro JavaScript. */
+const groups = [
+  { id: "pro", title: ui.professional[locale] },
+  { id: "perso", title: ui.personal[locale] },
+] as const;
+---
+
+<h1>{locale === "fr" ? "Projets" : "Projects"}</h1>
+
+<PageFigure id="projects" />
+
+{
+  groups.map((group) => (
+    <section class="section">
+      <SectionTitle title={group.title} />
+      <ul class="grid">
+        {projects
+          .filter((p) => p.category === group.id)
+          .map((project) => (
+            <li class="card">
+              <Image
+                class="card__media"
+                src={asset(project.image)}
+                alt={project.alt[locale]}
+                widths={[320, 640]}
+                sizes="(min-width: 48em) 20rem, 90vw"
+                loading="lazy"
+              />
+              <h3 class="card__title">
+                <a href={project.url} rel="noopener">
+                  {project.name}
+                </a>
+                <span class="card__year">{project.captured}</span>
+              </h3>
+              <p class="card__summary">{project.summary[locale]}</p>
+              {
+                project.tech.length > 0 && (
+                  <ul class="tags">
+                    {project.tech.map((tag) => <li>{tag}</li>)}
+                  </ul>
+                )
+              }
+              {project.metric && <p class="card__metric">{project.metric[locale]}</p>}
+            </li>
+          ))}
+      </ul>
+    </section>
+  ))
+}

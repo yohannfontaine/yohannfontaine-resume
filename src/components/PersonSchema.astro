@@ -1,0 +1,49 @@
+---
+import {
+  person,
+  positions,
+  education,
+  knowledge,
+  socialLinks,
+  type Locale,
+} from "../data/cv";
+import { routeById } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const site = Astro.site?.href ?? "https://yohannfontaine-resume.web.app/";
+const homeUrl = new URL(routeById("home").path[locale], site).href;
+const currentRole = positions.find((p) => p.end === null);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: person.name,
+  url: homeUrl,
+  inLanguage: locale,
+  jobTitle: person.headlines[0][locale],
+  ...(currentRole
+    ? { worksFor: { "@type": "Organization", name: currentRole.company } }
+    : {}),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: person.city,
+    addressCountry: "FR",
+  },
+  alumniOf: education.map((e) => ({
+    "@type": "EducationalOrganization",
+    name: e.school,
+  })),
+  knowsAbout: knowledge,
+  sameAs: socialLinks.map((s) => s.url),
+};
+---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(schema)}
+/>

@@ -1,0 +1,14 @@
+---
+import Base from "../../layouts/Base.astro";
+import HomeBody from "../../components/pages/HomeBody.astro";
+import { person } from "../../data/cv";
+---
+
+<Base
+  locale="en"
+  routeId="home"
+  title={`${person.name} — Lead Software Engineer`}
+  description="Experience, projects and skills of Yohann Fontaine, Lead Software Engineer and architect."
+>
+  <HomeBody locale="en" />
+</Base>

@@ -1,0 +1,53 @@
+---
+import { person, socialLinks, type Locale } from "../../data/cv";
+import { ui } from "../../i18n/ui";
+import SectionTitle from "../SectionTitle.astro";
+import Assistant from "../Assistant.astro";
+import PageFigure from "../PageFigure.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const cvPath = locale === "fr" ? "/cv.json" : "/en/cv.json";
+---
+
+<h1>Contact</h1>
+
+<PageFigure id="contact" />
+
+<section class="section">
+  <SectionTitle title={ui.location[locale]} />
+  <p>
+    <a href={person.mapUrl} rel="noopener">{person.city}</a>, {person.residence[locale]}
+  </p>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.elsewhere[locale]} />
+  <ul class="inline-list">
+    {
+      socialLinks.map((link) => (
+        <li>
+          <a href={link.url} rel="me noopener">
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="section">
+  <SectionTitle title={ui.machineReadable[locale]} />
+  <ul class="inline-list">
+    <li><a href={cvPath}>{ui.cvJsonLabel[locale]}</a></li>
+    <li><a href="/llms.txt">llms.txt</a></li>
+    <li><a href="/sitemap.xml">sitemap.xml</a></li>
+  </ul>
+</section>
+
+<section class="section">
+  <Assistant locale={locale} />
+</section>

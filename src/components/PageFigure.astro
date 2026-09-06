@@ -1,0 +1,43 @@
+---
+/**
+ * Bande générée en tête de page.
+ *
+ * Servie en fichier `.svg` : mise en cache par le navigateur, partagée entre
+ * les langues, et son animation vit à l'intérieur — la page n'a rien à piloter.
+ * Purement décorative, donc `aria-hidden` et `alt` vide.
+ */
+import { figureSpecs, type FigureId } from "../lib/figures";
+
+interface Props {
+  id: FigureId;
+}
+
+const { id } = Astro.props;
+const spec = figureSpecs[id];
+---
+
+<img
+  class="page-figure"
+  src={`/figures/${id}.svg`}
+  width={spec.width}
+  height={spec.height}
+  alt=""
+  aria-hidden="true"
+  loading="lazy"
+/>
+
+<style>
+  .page-figure {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: 15rem;
+    object-fit: cover;
+    margin-block: var(--space-l) var(--space-2xl);
+    /* Les bords se fondent dans la page : la bande n'est pas une image posée
+       dessus, c'est la page qui continue autrement. */
+    mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent),
+      linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-composite: intersect;
+  }
+</style>
